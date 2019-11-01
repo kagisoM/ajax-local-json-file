@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <meta charset = "utf-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ajax - External API</title>
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src = "https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <link href = "css/bootstrap.min.css" rel="stylesheet">
+    <link rel = "stylesheet" type = "text/css" href = "css/bootstrap.css"/>
+    <link href = "css/style.css" rel="stylesheet">
+    <script type = "text/javascript" src = "js/script.js"></script>
+    <script type = "text/javascript" src = "js/jquery-3.2.1.min.js"></script>
+    <script src = "js/bootstrap.min.js"></script>
+    <script src = "js/jquery.js"></script>
+    <style type="text/css">
+    .user {
+      display : flex;
+      background: #f4f4f4;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .user ul {
+      list-style: none;
+    }
+    </style>
+  </head>
+  <body>
+    <div class = "container">
+
+        <button id = "button">Load GitHub Users</button>
+      
+        <br> <br>
+
+        <h1>GitHub Users</h1>
+        <div id = "users">
+        </div>
+
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type = "text/javascript">
+
+    // Create event listener
+      document.getElementById('button').addEventListener('click', loadUsers);
+    
+      // Load gitHub Users
+      function loadUsers() {
+       // Create XHR Object
+       var xhr = new XMLHttpRequest();
+       // Function to makethe request ,Open - type, url/file, async
+       xhr.open('GET', 'users.json', true);
+
+       xhr.onload = function() {
+        if(this.status == 200) {
+            // one element from json file
+            var users = JSON.parse(this.responseText);
+            var output = '';
+            for(var i in users) {
+              output +=
+              '<div class = "user">' +
+              '<img src ="'+users[i].avatar_url+'" width="70" height = "70">' +
+              '<ul>'+
+              '<li>ID: '+users[i].id+'</li>'+
+              '<li>Login: '+users[i].login+'</li>'+
+              '<li>HTML Url: '+users[i].html_url+'</li>'+
+              '<li>Organizations Url: '+users[i].organizations_url+'</li>'+
+              '</ul>' +
+              '</div>';
+            }
+           document.getElementById('users').innerHTML = output;
+        }
+       }
+       xhr.send();
+       }
+
+      
+      // HTTP Statuses
+      // 200: "OK"
+      // 403: "Forbidden"
+      // 404: "Not found"
+
+    </script>
+  </body>
+</html>
